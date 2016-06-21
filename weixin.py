@@ -166,7 +166,7 @@ class WebWeixin(object):
         QRCODE_PATH = self._saveFile('qrcode.jpg', data, '_showQRCodeImg')
         os.startfile(QRCODE_PATH)
 
-    def waitForLogin(self, tip=1):
+    def waitForLogin(self, tip=1):            #用于登陆
         time.sleep(tip)
         url = 'https://login.weixin.qq.com/cgi-bin/mmwebwx-bin/login?tip=%s&uuid=%s&_=%s' % (
             tip, self.uuid, int(time.time()))
@@ -188,7 +188,7 @@ class WebWeixin(object):
             self._echo('[登陆异常] \n')
         return False
 
-    def login(self):
+    def login(self):                 #意义不明：查阅相关知识
         data = self._get(self.redirect_uri)
         doc = xml.dom.minidom.parseString(data)
         root = doc.documentElement
@@ -214,7 +214,7 @@ class WebWeixin(object):
         }
         return True
 
-    def webwxinit(self):
+    def webwxinit(self):                #意义不明：查阅相关知识
         url = self.base_uri + '/webwxinit?pass_ticket=%s&skey=%s&r=%s' % (
             self.pass_ticket, self.skey, int(time.time()))
         params = {
@@ -328,7 +328,7 @@ class WebWeixin(object):
                 return True
         return False
 
-    def synccheck(self):
+    def synccheck(self):                #用于检查同步
         params = {
             'r': int(time.time()),
             'sid': self.sid,
@@ -781,7 +781,7 @@ class WebWeixin(object):
                     'raw_msg': msg, 'message': '[*] 该消息类型为: %d，可能是表情，图片, 链接或红包' % msg['MsgType']}
                 self._showMsg(raw_msg)
 
-    def listenMsgMode(self):
+    def listenMsgMode(self):                #重要！可利用部分，改写handleMsg方法来实现自动回复
         print '[*] 进入消息监听模式 ... 成功'
         logging.debug('[*] 进入消息监听模式 ... 成功')
         self._run('[*] 进行同步线路测试 ... ', self.testsynccheck)
@@ -794,12 +794,12 @@ class WebWeixin(object):
                 print 'retcode: %s, selector: %s' % (retcode, selector)
             logging.debug('retcode: %s, selector: %s' % (retcode, selector))
             if retcode == '1100':
-                print '[*] 你在手机上登出了微信，债见'
-                logging.debug('[*] 你在手机上登出了微信，债见')
+                print '你在手机上登出了微信，再见'
+                logging.debug('你在手机上登出了微信，再见')
                 break
             if retcode == '1101':
-                print '[*] 你在其他地方登录了 WEB 版微信，债见'
-                logging.debug('[*] 你在其他地方登录了 WEB 版微信，债见')
+                print '你在其他地方登录了 WEB 版微信，再见'
+                logging.debug('你在其他地方登录了 WEB 版微信，再见')
                 break
             elif retcode == '0':
                 if selector == '2':
@@ -967,7 +967,7 @@ class WebWeixin(object):
             logging.debug('[*] 退出程序')
             exit()
 
-    def _echo(self, str):
+    def _echo(self, str):            #意义不明：查阅相关知识
         sys.stdout.write(str)
         sys.stdout.flush()
 
